@@ -1,5 +1,5 @@
 
-# The data can then be loaded with the bin/rails db:seed command (or created .
+# The data can then be loaded with the bin/rails db:seed .
 #
 # Example:
 #
