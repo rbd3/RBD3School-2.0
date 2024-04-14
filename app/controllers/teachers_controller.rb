@@ -1,5 +1,5 @@
 class TeachersController < ApplicationController
-  before_action :set_teacher, only: %i[ show edit update destroy ]
+  before_action :set_teacher, only: %i[show edit update destroy]
 
   # GET /teachers or /teachers.json
   def index
@@ -58,13 +58,14 @@ class TeachersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_teacher
-      @teacher = Teacher.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def teacher_params
-      params.require(:teacher).permit(:first_name, :last_name, :subject_taught)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_teacher
+    @teacher = Teacher.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def teacher_params
+    params.require(:teacher).permit(:first_name, :last_name, :subject_taught)
+  end
 end

@@ -17,7 +17,9 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create student" do
     assert_difference("Student.count") do
-      post students_url, params: { student: { class_assignment_id: @student.class_assignment_id, email: @student.email, first_name: @student.first_name, last_name: @student.last_name } }
+      post students_url,
+           params: { student: { class_assignment_id: @student.class_assignment_id, email: @student.email,
+                                first_name: @student.first_name, last_name: @student.last_name } }
     end
 
     assert_redirected_to student_url(Student.last)
@@ -34,7 +36,9 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update student" do
-    patch student_url(@student), params: { student: { class_assignment_id: @student.class_assignment_id, email: @student.email, first_name: @student.first_name, last_name: @student.last_name } }
+    patch student_url(@student),
+          params: { student: { class_assignment_id: @student.class_assignment_id, email: @student.email,
+                               first_name: @student.first_name, last_name: @student.last_name } }
     assert_redirected_to student_url(@student)
   end
 
