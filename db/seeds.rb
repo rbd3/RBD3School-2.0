@@ -14,3 +14,5 @@ Teacher.create(first_name: "Jack", last_name: "Doe")
 teacher = Teacher.first # Assuming you have at least one teacher
 subject = Subject.create(Title: "Math")
 TeachingAssignment.create(teacher: teacher, subject: subject)
+
+Student.create(first_name: "bolida", last_name:"Dede", email:"dede@gmail.com")
