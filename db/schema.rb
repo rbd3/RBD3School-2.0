@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_14_004148) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_14_012822) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_14_004148) do
     t.datetime "updated_at", null: false
     t.index ["class_assignment_id"], name: "index_class_teachers_on_class_assignment_id"
     t.index ["teacher_id"], name: "index_class_teachers_on_teacher_id"
+  end
+
+  create_table "students", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.bigint "class_assignment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["class_assignment_id"], name: "index_students_on_class_assignment_id"
   end
 
   create_table "subject_coefficients", force: :cascade do |t|
@@ -70,6 +80,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_14_004148) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "students", "class_assignments"
   add_foreign_key "subject_coefficients", "subjects"
   add_foreign_key "teaching_assignments", "subjects"
   add_foreign_key "teaching_assignments", "teachers"
