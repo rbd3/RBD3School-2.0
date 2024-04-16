@@ -16,3 +16,21 @@ subject = Subject.create(Title: "Math")
 TeachingAssignment.create(teacher: teacher, subject: subject)
 
 Student.create(first_name: "bolida", last_name:"Dede", email:"dede@gmail.com")
+student = Student.create(first_name: "Mike", last_name: "Travice"
+, email: "john@example.com")
+
+student = Student.create(first_name: "bolida", last_name: "Dede", email: "dede@gmail.com")
+
+# Associate subjects with the student
+subject1 = Subject.create(title: "Physic")
+subject2 = Subject.create(title: "Science")
+
+student.subjects << subject1
+student.subjects << subject2
+
+# Save changes to the database
+student.save
+
+# Now when you query the student's subjects, you should see the associated subjects
+student.subjects
+
