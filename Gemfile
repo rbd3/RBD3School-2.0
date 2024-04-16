@@ -31,6 +31,11 @@ gem "jbuilder"
 
 gem 'rubocop-rails', require: false
 
+gem 'active_model_serializers'
+
+gem 'oj'
+
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
