@@ -1,2 +1,2 @@
 # config/initializers/serializer.rb
-ActiveModel::Serializer.config.adapter = :oj
+ActiveModel::Serializer.config.adapter = :json

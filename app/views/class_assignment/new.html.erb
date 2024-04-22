@@ -1,0 +1,23 @@
+<%= form_with(model: @class_assignment) do |form| %>
+    <% if @class_assignment.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(@class_assignment.errors.count, "error") %> prohibited this class_assignment from being saved:</h2>
+  
+        <ul>
+          <% @class_assignment.errors.full_messages.each do |error| %>
+            <li><%= error %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  
+    <div>
+      <%= form.label :class_name, style: "display: block" %>
+      <%= form.text_field :class_name %>
+    </div>
+  
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+  
