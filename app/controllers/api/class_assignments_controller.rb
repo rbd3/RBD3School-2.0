@@ -32,6 +32,18 @@ class Api::ClassAssignmentsController < ApplicationController
     end
   end
 
+  # DELETE /api/class_assignments/:id
+  def destroy
+    @class_assignment = ClassAssignment.find_by(id: params[:id])
+    
+    if @class_assignment
+      @class_assignment.destroy
+      render json: { message: 'Class deleted successfully' }, status: :ok
+    else
+      render json: { error: 'Class already deleted or not present' }, status: :not_found
+    end
+  end
+
   private
 
   # Only allow a list of trusted parameters through.

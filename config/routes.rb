@@ -20,7 +20,7 @@ Rails.application.routes.draw do
    #root "class_assignments#index"
 
    namespace :api do
-    resources :class_assignments, only: [:index, :create, :update]
+    resources :class_assignments, only: [:index, :create, :update, :destroy]
   end
 
 end
