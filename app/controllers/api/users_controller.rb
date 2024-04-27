@@ -29,7 +29,6 @@ class Api::UsersController < ApplicationController
     end
   end
 
-
   # PATCH/PUT /api/user/:id
   def update
     @user = User.find_by(id: params[:id])
@@ -44,7 +43,6 @@ class Api::UsersController < ApplicationController
     end
   end
 
-
   # DELETE /api/students/:id
   def destroy
     @user = User.find_by(id: params[:id])
@@ -55,7 +53,6 @@ class Api::UsersController < ApplicationController
       render json: { error: 'user already deleted or not present' }, status: :not_found
     end
   end
-
 
   private
 
