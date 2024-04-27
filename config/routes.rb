@@ -26,6 +26,10 @@ Rails.application.routes.draw do
     resources :subjects, only: [:index, :show, :create, :update, :destroy]
     resources :teachers, only: [:index, :show, :create, :update, :destroy]
     resources :users, only: [:index, :show, :create, :update, :destroy]
+    resources :class_teachers, only: [:index, :show, :create, :update, :destroy]
+    resources :student_subjects, only: [:index, :show, :create, :update, :destroy]
+    resources :subject_coefficients, only: [:index, :show, :create, :update, :destroy]
+    resources :teaching_assignments, only: [:index, :show, :create, :update, :destroy]
   end
 
 end
