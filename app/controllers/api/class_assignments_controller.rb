@@ -44,6 +44,16 @@ class Api::ClassAssignmentsController < ApplicationController
     end
   end
 
+  # GET /api/students/:id
+  def show
+    @class_assignment = ClassAssignment.find_by(id: params[:id])
+    if @class_assignment
+      render json: @class_assignment
+    else
+      render json: { error: 'class not found' }, status: :not_found
+    end
+  end
+
   private
 
   # Only allow a list of trusted parameters through.
