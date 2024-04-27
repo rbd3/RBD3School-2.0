@@ -18,6 +18,6 @@ class Student < ApplicationRecord
 
     average = total_coefficient.zero? ? 0 : total_mark.to_f / total_coefficient
 
-    { total_mark: total_mark, average: average }
+    { total_mark:, average: }
   end
 end
