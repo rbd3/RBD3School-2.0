@@ -12,7 +12,7 @@ class Api::ClassAssignmentsController < ApplicationController
 
   # POST /api/class_assignments
   def create
-    @class_assignment = ClassAssignment.new(class_name: params[:class_name])
+    @class_assignment = ClassAssignment.new(class_params)
 
     if @class_assignment.save
       render json: @class_assignment, status: :created
