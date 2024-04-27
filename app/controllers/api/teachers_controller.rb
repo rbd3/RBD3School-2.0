@@ -59,4 +59,3 @@ class Api::TeachersController < ApplicationController
     params.require(:teacher).permit(:first_name, :last_name, :email, :subject_taught)
   end
 end
-

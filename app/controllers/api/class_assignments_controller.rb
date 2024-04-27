@@ -35,7 +35,7 @@ class Api::ClassAssignmentsController < ApplicationController
   # DELETE /api/class_assignments/:id
   def destroy
     @class_assignment = ClassAssignment.find_by(id: params[:id])
-    
+
     if @class_assignment
       @class_assignment.destroy
       render json: { message: 'Class deleted successfully' }, status: :ok

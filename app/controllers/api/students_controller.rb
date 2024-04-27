@@ -6,7 +6,7 @@ class Api::StudentsController < ApplicationController
   def index
     @students = Student.all
     count = @students.count
-    render json: {Students: @students, count: count}
+    render json: { Students: @students, count: count }
   end
 
   # GET /api/students/:id
