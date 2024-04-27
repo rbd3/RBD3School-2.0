@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  namespace :api do
+    
   resources :students
   resources :subjects
   resources :teachers
@@ -20,7 +22,8 @@ Rails.application.routes.draw do
    #root "class_assignments#index"
 
    namespace :api do
-    resources :class_assignments, only: [:index, :create, :update, :destroy]
+    resources :class_assignments, only: [:index, :create, :update, :destroy],
+    resources :students, only: [:index, :show, :create, :update, :destroy]
   end
 
 end
