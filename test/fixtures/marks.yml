@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  mark_value: 1.5
+  student: one
+  subject: one
+
+two:
+  mark_value: 1.5
+  student: two
+  subject: two
