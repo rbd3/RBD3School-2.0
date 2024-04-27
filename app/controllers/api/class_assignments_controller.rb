@@ -7,7 +7,7 @@ class Api::ClassAssignmentsController < ApplicationController
     @class_assignments = ClassAssignment.where.not(class_name: nil).where.not(class_name: '')
     count = @class_assignments.count
 
-    render json: { class_assignments: @class_assignments, count: count }
+    render json: { class_assignments: @class_assignments, count: }
   end
 
   # POST /api/class_assignments

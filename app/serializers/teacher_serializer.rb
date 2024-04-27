@@ -1,3 +1,3 @@
 class TeacherSerializer < ActiveModel::Serializer
-  attributes *Teacher.column_names
+  attributes(*Teacher.column_names)
 end

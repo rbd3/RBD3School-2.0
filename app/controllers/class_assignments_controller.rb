@@ -4,8 +4,7 @@ class ClassAssignmentsController < ApplicationController
   end
 
   # GET /students/1 or /students/1.json
-  def show
-  end
+  def show; end
 
   def create
     @class = ClassAssignment.new(class_assignment_params)
