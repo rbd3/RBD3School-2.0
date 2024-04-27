@@ -54,6 +54,20 @@ class Api::StudentsController < ApplicationController
     end
   end
 
+  # GET /api/students/:id/calculate_marks
+  def calculate_marks
+    @student = Student.find(params[:id])
+    marks = calculate_student_marks(@student)
+    render json: marks
+  end
+
+  def calculate_student_marks(student)
+    overall_marks = student.overall_mark
+    total_mark = overall_marks[:total_mark]
+    average_mark = overall_marks[:average]
+    { total_mark: total_mark, average_mark: average_mark }
+  end
+
   private
 
   def student_params

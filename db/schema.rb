@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_27_205502) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_27_222407) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,6 +35,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_27_205502) do
     t.bigint "subject_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "class_assignment_id", default: 2
+    t.index ["class_assignment_id"], name: "index_marks_on_class_assignment_id"
     t.index ["student_id"], name: "index_marks_on_student_id"
     t.index ["subject_id"], name: "index_marks_on_subject_id"
   end
@@ -100,6 +102,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_27_205502) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "marks", "class_assignments"
   add_foreign_key "marks", "students"
   add_foreign_key "marks", "subjects"
   add_foreign_key "student_subjects", "students"
