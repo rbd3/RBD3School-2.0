@@ -6,7 +6,7 @@ class Api::SubjectsController < ApplicationController
   def index
     @subjects = Subject.all
     count = @subjects.count
-    render json: { subjects: @subjects, count: count }
+    render json: { subjects: @subjects, count: }
   end
 
   # GET /api/subjects/:id
