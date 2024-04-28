@@ -65,7 +65,7 @@ class Api::StudentsController < ApplicationController
     overall_marks = student.overall_mark
     total_mark = overall_marks[:total_mark]
     average_mark = overall_marks[:average]
-    { total_mark: total_mark, Moyenne: average_mark }
+    { total_mark:, Moyenne: average_mark }
   end
 
   def rank_by_average
@@ -77,11 +77,9 @@ class Api::StudentsController < ApplicationController
         average_mark: student.overall_mark[:average] # Calculate the average mark for each student
       }
     end.sort_by { |student| -student[:average_mark] } # Sort students by average mark in descending order
-  
+
     render json: ranked_students
   end
-  
-  
 
   private
 

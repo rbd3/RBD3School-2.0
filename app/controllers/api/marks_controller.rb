@@ -43,16 +43,15 @@ class Api::MarksController < ApplicationController
   end
 
   # DELETE /api/marks/:id
-def destroy
-  @mark = Mark.find_by(id: params[:id])
-  if @mark
-    @mark.destroy
-    render json: { message: 'mark deleted successfully' }, status: :ok
-  else
-    render json: { error: 'mark already deleted or not present' }, status: :not_found
+  def destroy
+    @mark = Mark.find_by(id: params[:id])
+    if @mark
+      @mark.destroy
+      render json: { message: 'mark deleted successfully' }, status: :ok
+    else
+      render json: { error: 'mark already deleted or not present' }, status: :not_found
+    end
   end
-end
-
 
   private
 
