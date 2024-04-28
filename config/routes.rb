@@ -23,9 +23,12 @@ Rails.application.routes.draw do
    namespace :api do
     resources :class_assignments, only: [:index, :show, :create, :update, :destroy]
     resources :students, only: [:index, :show, :create, :update, :destroy] do
+      collection do
+        get 'rank_by_average'
+      end
       member do
         get 'calculate_marks', to: 'students#calculate_marks'
-      end
+        end
     end
 
     resources :subjects, only: [:index, :show, :create, :update, :destroy]

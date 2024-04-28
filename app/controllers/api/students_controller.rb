@@ -68,6 +68,21 @@ class Api::StudentsController < ApplicationController
     { total_mark: total_mark, Moyenne: average_mark }
   end
 
+  def rank_by_average
+    students = Student.all.includes(:marks)
+    ranked_students = students.map do |student|
+      {
+        id: student.id,
+        name: "#{student.first_name} #{student.last_name}",
+        average_mark: student.overall_mark[:average] # Calculate the average mark for each student
+      }
+    end.sort_by { |student| -student[:average_mark] } # Sort students by average mark in descending order
+  
+    render json: ranked_students
+  end
+  
+  
+
   private
 
   def student_params
