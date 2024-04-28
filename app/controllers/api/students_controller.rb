@@ -74,6 +74,7 @@ class Api::StudentsController < ApplicationController
       {
         id: student.id,
         name: "#{student.first_name} #{student.last_name}",
+        matricule: "#{student.matricule}",
         average_mark: student.overall_mark[:average]
       }
     end
