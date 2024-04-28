@@ -9,7 +9,12 @@ class Api::MarksController < ApplicationController
 
   # GET /api/marks/:id
   def show
-    render json: @mark
+    @marks = Mark.find_by(id: params[:id])
+    if @marks
+      render json: @marks
+    else
+      render json: { error: 'marks not found' }, status: :not_found
+    end
   end
 
   # POST /api/marks
@@ -25,10 +30,15 @@ class Api::MarksController < ApplicationController
 
   # PATCH/PUT /api/marks/:id
   def update
-    if @mark.update(mark_params)
-      render json: @mark
+    @mark = Mark.find_by(id: params[:id])
+    if @mark
+      if @mark.update(mark_params)
+        render json: @mark
+      else
+        render json: @mark.errors, status: :unprocessable_entity
+      end
     else
-      render json: @mark.errors, status: :unprocessable_entity
+      render json: { error: 'mark not found' }, status: :not_found
     end
   end
 

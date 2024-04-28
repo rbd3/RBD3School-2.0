@@ -65,7 +65,7 @@ class Api::StudentsController < ApplicationController
     overall_marks = student.overall_mark
     total_mark = overall_marks[:total_mark]
     average_mark = overall_marks[:average]
-    { total_mark: total_mark, average_mark: average_mark }
+    { total_mark: total_mark, Moyenne: average_mark }
   end
 
   private
