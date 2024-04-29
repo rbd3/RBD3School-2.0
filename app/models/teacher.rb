@@ -1,4 +1,6 @@
 class Teacher < ApplicationRecord
+  belongs_to :user
+  
   has_many :teaching_assignments, dependent: :destroy
   has_many :subjects_taught, through: :teaching_assignments, source: :subject
 

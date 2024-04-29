@@ -54,11 +54,22 @@ class Api::UsersController < ApplicationController
     end
   end
 
+   # POST /api/users/login
+   def login
+    @user = User.find_by(email: params[:email])
+
+    if @user && @user.authenticate(params[:password])
+      render json: { message: 'Login successful', user: @user }
+    else
+      render json: { error: 'Invalid email or password' }, status: :unauthorized
+    end
+  end
+
   private
 
   # Only allow a list of trusted parameters through.
   def user_params
     params[:user][:role]&.downcase!
-    params.require(:user).permit(:first_name, :last_name, :email, :role)
+    params.require(:user).permit(:first_name, :last_name, :email, :role, :password)
   end
 end
