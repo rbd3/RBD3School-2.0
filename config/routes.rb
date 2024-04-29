@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       end
       member do
         get 'calculate_marks', to: 'students#calculate_marks'
+        patch 'assign_to_class'
         end
     end
 
