@@ -53,24 +53,22 @@ class Api::StudentsController < ApplicationController
       render json: { error: 'Student already deleted or not present' }, status: :not_found
     end
   end
-  
 
   # PATCH/PUT /api/students/:id/assign_to_class
-def assign_to_class
-  @student = Student.find_by(id: params[:id])
-  if @student
-    class_assignment = ClassAssignment.find_by(id: params[:class_assignment_id])
-    if class_assignment
-      @student.update(class_assignment_id: class_assignment.id)
-      render json: { message: 'Student assigned to class successfully' }, status: :ok
+  def assign_to_class
+    @student = Student.find_by(id: params[:id])
+    if @student
+      class_assignment = ClassAssignment.find_by(id: params[:class_assignment_id])
+      if class_assignment
+        @student.update(class_assignment_id: class_assignment.id)
+        render json: { message: 'Student assigned to class successfully' }, status: :ok
+      else
+        render json: { error: 'Class assignment not found' }, status: :not_found
+      end
     else
-      render json: { error: 'Class assignment not found' }, status: :not_found
+      render json: { error: 'Student not found' }, status: :not_found
     end
-  else
-    render json: { error: 'Student not found' }, status: :not_found
   end
-end
-
 
   # GET /api/students/:id/calculate_marks
   def calculate_marks
@@ -92,7 +90,7 @@ end
       {
         id: student.id,
         name: "#{student.first_name} #{student.last_name}",
-        matricule: "#{student.matricule}",
+        matricule: student.matricule.to_s,
         average_mark: student.overall_mark[:average]
       }
     end

@@ -54,11 +54,11 @@ class Api::UsersController < ApplicationController
     end
   end
 
-   # POST /api/users/login
-   def login
+  # POST /api/users/login
+  def login
     @user = User.find_by(email: params[:email])
 
-    if @user && @user.authenticate(params[:password])
+    if @user&.authenticate(params[:password])
       render json: { message: 'Login successful', user: @user }
     else
       render json: { error: 'Invalid email or password' }, status: :unauthorized
