@@ -24,7 +24,7 @@ def create
   @user = User.new(user_params)
   if @user.save
     if @user.role == 'teacher'
-      @teacher = Teacher.create(user: @user, first_name: @user.first_name, last_name: @user.last_name, subject_taught: params[:subject_taught])
+      @teacher = Teacher.create(user: @user, first_name: @user.first_name, last_name: @user.last_name, email: @user.email, subject_taught: params[:subject_taught])
       render json: { user: @user, teacher: @teacher }, status: :created
     elsif @user.role == 'student' # Corrected here
       @student = Student.create(user: @user, first_name: @user.first_name, last_name: @user.last_name, email: @user.email, matricule: params[:matricule])
