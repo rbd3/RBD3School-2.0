@@ -19,35 +19,36 @@ class Api::UsersController < ApplicationController
     end
   end
 
-# POST /api/users
-def signup
-  @user = User.new(user_params)
-  if @user.save
-    if @user.role == 'teacher'
-      @teacher = Teacher.create(user: @user, first_name: @user.first_name, last_name: @user.last_name, email: @user.email, subject_taught: params[:subject_taught])
-      render json: { user: @user, teacher: @teacher }, status: :created
-    elsif @user.role == 'student' # Corrected here
-      @student = Student.create(user: @user, first_name: @user.first_name, last_name: @user.last_name, email: @user.email, matricule: params[:matricule])
-      render json: { user: @user, student: @student }, status: :created
+  # POST /api/users
+  def signup
+    @user = User.new(user_params)
+    if @user.save
+      if @user.role == 'teacher'
+        @teacher = Teacher.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
+                                  email: @user.email, subject_taught: params[:subject_taught])
+        render json: { user: @user, teacher: @teacher }, status: :created
+      elsif @user.role == 'student'
+        @student = Student.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
+                                  email: @user.email, matricule: params[:matricule])
+        render json: { user: @user, student: @student }, status: :created
+      else
+        render json: @user, status: :created
+      end
     else
-      render json: @user, status: :created
+      render json: @user.errors, status: :unprocessable_entity
     end
-  else
-    render json: @user.errors, status: :unprocessable_entity
   end
-end
 
- # POST /api/users/login
- def login
-  @user = User.find_by(email: params[:email])
+  # POST /api/users/login
+  def login
+    @user = User.find_by(email: params[:email])
 
-  if @user&.authenticate(params[:password])
-    render json: { message: 'Login successful', user: @user }
-  else
-    render json: { error: 'Invalid email or password' }, status: :unauthorized
+    if @user&.valid_password?(params[:password])
+      render json: { message: 'Login successful', user: @user }
+    else
+      render json: { error: 'Invalid email or password' }, status: :unauthorized
+    end
   end
-end
-
 
   # PATCH/PUT /api/user/:id
   def update
@@ -63,8 +64,8 @@ end
     end
   end
 
-   # DELETE /api/users/:id
-   def destroy
+  # DELETE /api/users/:id
+  def destroy
     @user = User.find_by(id: params[:id])
     if @user
       destroy_user_and_associations(@user)
@@ -73,16 +74,14 @@ end
     end
   end
 
-   # DELETE /api/users
-   def destroy_all
-    begin
-      ActiveRecord::Base.transaction do
-        User.destroy_all
-        render json: { message: 'All users deleted successfully' }, status: :ok
-      end
-    rescue ActiveRecord::InvalidForeignKey => e
-      render json: { error: e.message }, status: :unprocessable_entity
+  # DELETE /api/users
+  def destroy_all
+    ActiveRecord::Base.transaction do
+      User.destroy_all
+      render json: { message: 'All users deleted successfully' }, status: :ok
     end
+  rescue ActiveRecord::InvalidForeignKey => e
+    render json: { error: e.message }, status: :unprocessable_entity
   end
 
   private
@@ -93,8 +92,8 @@ end
     student = user.student
 
     ActiveRecord::Base.transaction do
-      teacher.destroy if teacher
-      student.destroy if student
+      teacher&.destroy
+      student&.destroy
       user.destroy
 
       render json: { message: 'User and associated records deleted successfully' }, status: :ok
@@ -103,10 +102,6 @@ end
       raise ActiveRecord::Rollback
     end
   end
-
-
-
-  private
 
   # Only allow a list of trusted parameters through.
   def user_params
