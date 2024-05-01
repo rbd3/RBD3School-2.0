@@ -20,7 +20,7 @@ class Api::UsersController < ApplicationController
   end
 
 # POST /api/users
-def create
+def signup
   @user = User.new(user_params)
   if @user.save
     if @user.role == 'teacher'
@@ -37,6 +37,16 @@ def create
   end
 end
 
+ # POST /api/users/login
+ def login
+  @user = User.find_by(email: params[:email])
+
+  if @user&.authenticate(params[:password])
+    render json: { message: 'Login successful', user: @user }
+  else
+    render json: { error: 'Invalid email or password' }, status: :unauthorized
+  end
+end
 
 
   # PATCH/PUT /api/user/:id
@@ -53,33 +63,54 @@ end
     end
   end
 
-  # DELETE /api/students/:id
-  def destroy
+   # DELETE /api/users/:id
+   def destroy
     @user = User.find_by(id: params[:id])
     if @user
-      @user.destroy
-      render json: { message: 'user deleted successfully' }, status: :ok
+      destroy_user_and_associations(@user)
     else
-      render json: { error: 'user already deleted or not present' }, status: :not_found
+      render json: { error: 'User not found' }, status: :not_found
     end
   end
 
-  # POST /api/users/login
-  def login
-    @user = User.find_by(email: params[:email])
-
-    if @user&.authenticate(params[:password_digest])
-      render json: { message: 'Login successful', user: @user }
-    else
-      render json: { error: 'Invalid email or password' }, status: :unauthorized
+   # DELETE /api/users
+   def destroy_all
+    begin
+      ActiveRecord::Base.transaction do
+        User.destroy_all
+        render json: { message: 'All users deleted successfully' }, status: :ok
+      end
+    rescue ActiveRecord::InvalidForeignKey => e
+      render json: { error: e.message }, status: :unprocessable_entity
     end
   end
+
+  private
+
+  # Method to delete user and its associated teacher and student records
+  def destroy_user_and_associations(user)
+    teacher = user.teacher
+    student = user.student
+
+    ActiveRecord::Base.transaction do
+      teacher.destroy if teacher
+      student.destroy if student
+      user.destroy
+
+      render json: { message: 'User and associated records deleted successfully' }, status: :ok
+    rescue ActiveRecord::RecordNotDestroyed => e
+      render json: { error: e.message }, status: :unprocessable_entity
+      raise ActiveRecord::Rollback
+    end
+  end
+
+
 
   private
 
   # Only allow a list of trusted parameters through.
   def user_params
     params[:user][:role]&.downcase!
-    params.require(:user).permit(:first_name, :last_name, :email, :role, :password_digest)
+    params.require(:user).permit(:first_name, :last_name, :email, :role, :password, :password_confirmation)
   end
 end
