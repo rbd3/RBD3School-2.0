@@ -54,6 +54,52 @@ class Api::StudentsController < ApplicationController
     end
   end
 
+  # PATCH/PUT /api/students/:id/assign_to_class
+  def assign_to_class
+    @student = Student.find_by(id: params[:id])
+    if @student
+      class_assignment = ClassAssignment.find_by(id: params[:class_assignment_id])
+      if class_assignment
+        @student.update(class_assignment_id: class_assignment.id)
+        render json: { message: 'Student assigned to class successfully' }, status: :ok
+      else
+        render json: { error: 'Class assignment not found' }, status: :not_found
+      end
+    else
+      render json: { error: 'Student not found' }, status: :not_found
+    end
+  end
+
+  # GET /api/students/:id/calculate_marks
+  def calculate_marks
+    @student = Student.find(params[:id])
+    marks = calculate_student_marks(@student)
+    render json: marks
+  end
+
+  def calculate_student_marks(student)
+    overall_marks = student.overall_mark
+    total_mark = overall_marks[:total_mark]
+    average_mark = overall_marks[:average]
+    { total_mark:, Moyenne: average_mark }
+  end
+
+  def rank_by_average
+    students = Student.all.includes(:marks)
+    ranked_students = students.map do |student|
+      {
+        id: student.id,
+        name: "#{student.first_name} #{student.last_name}",
+        matricule: student.matricule.to_s,
+        average_mark: student.overall_mark[:average]
+      }
+    end
+
+    ranked_students = ranked_students.sort_by { |student| -student[:average_mark] }
+
+    render json: ranked_students
+  end
+
   private
 
   def student_params

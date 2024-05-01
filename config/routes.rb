@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
     
   resources :students
   resources :subjects
@@ -22,10 +23,32 @@ Rails.application.routes.draw do
 
    namespace :api do
     resources :class_assignments, only: [:index, :show, :create, :update, :destroy]
-    resources :students, only: [:index, :show, :create, :update, :destroy]
+    resources :students, only: [:index, :show, :create, :update, :destroy] do
+      collection do
+        get 'rank_by_average'
+      end
+      member do
+        get 'calculate_marks', to: 'students#calculate_marks'
+        patch 'assign_to_class'
+        end
+    end
+    
+    post '/signup', to: 'users#signup'
+    get '/login', to: 'users#login'
+
     resources :subjects, only: [:index, :show, :create, :update, :destroy]
     resources :teachers, only: [:index, :show, :create, :update, :destroy]
-    resources :users, only: [:index, :show, :create, :update, :destroy]
+    resources :users, only: [:index, :show, :create, :update, :destroy] do
+      collection do
+        delete 'destroy_all'
+      end
+    end
+    
+    resources :class_teachers, only: [:index, :show, :create, :update, :destroy]
+    resources :student_subjects, only: [:index, :show, :create, :update, :destroy]
+    resources :subject_coefficients, only: [:index, :show, :create, :update, :destroy]
+    resources :teaching_assignments, only: [:index, :show, :create, :update, :destroy]
+    resources :marks, only: [:index, :show, :create, :update, :destroy]
   end
 
 end
