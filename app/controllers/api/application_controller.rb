@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
   end
 
   def token_valid?(token)
-    decoded_token = JWT.decode(token, 'secret_key', true, algorithm: 'HS256')
+    decoded_token = JWT.decode(token, Rails.application.secrets.secret_key_base, true, algorithm: 'HS256')
     @current_user_id = decoded_token.first['user_id']
     true
   rescue JWT::DecodeError

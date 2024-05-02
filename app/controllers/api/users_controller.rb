@@ -92,7 +92,7 @@ class Api::UsersController < ApplicationController
   private
 
   def encode_token(payload)
-    secret_key = '95f0b537e51c30349a5f11e768a9b5f9ce8ea6a366bf21b3fa916777550c4bdf291b80ee543887398fd754412bb93492ce951c9482d7a9d7320f2227f650f7af'
+    secret_key = Rails.application.secrets.secret_key_base
     JWT.encode(payload, secret_key, 'HS256')
   end
 
