@@ -55,13 +55,6 @@ class Api::UsersController < ApplicationController
     end
   end
 
-  private
-
-  def encode_token(payload)
-    secret_key = '95f0b537e51c30349a5f11e768a9b5f9ce8ea6a366bf21b3fa916777550c4bdf291b80ee543887398fd754412bb93492ce951c9482d7a9d7320f2227f650f7af'
-    JWT.encode(payload, secret_key, 'HS256')
-  end
-
   # PATCH/PUT /api/user/:id
   def update
     @user = User.find_by(id: params[:id])
@@ -94,6 +87,13 @@ class Api::UsersController < ApplicationController
     end
   rescue ActiveRecord::InvalidForeignKey => e
     render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  private
+
+  def encode_token(payload)
+    secret_key = '95f0b537e51c30349a5f11e768a9b5f9ce8ea6a366bf21b3fa916777550c4bdf291b80ee543887398fd754412bb93492ce951c9482d7a9d7320f2227f650f7af'
+    JWT.encode(payload, secret_key, 'HS256')
   end
 
   # Method to delete user and its associated teacher and student records
