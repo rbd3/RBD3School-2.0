@@ -26,7 +26,7 @@ class Api::UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       # Generate a unique token for the user
-      token = SecureRandom.hex(20) # You can use any token generation method you prefer
+      token = encode_token(user_id: @user.id)
 
       if @user.role == 'teacher'
         @teacher = Teacher.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
@@ -48,6 +48,7 @@ class Api::UsersController < ApplicationController
     @user = User.find_by(email: params[:email])
 
     if @user&.valid_password?(params[:password])
+      # Generate a unique token for the user
       token = encode_token(user_id: @user.id)
       render json: { message: 'Login successful', user: @user, token: }
     else
