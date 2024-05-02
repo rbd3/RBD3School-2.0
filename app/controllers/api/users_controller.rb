@@ -20,45 +20,46 @@ class Api::UsersController < ApplicationController
       render json: { error: 'User not found' }, status: :not_found
     end
   end
-# POST /api/users
-def signup
-  @user = User.new(user_params)
-  if @user.save
-    # Generate a unique token for the user
-    token = SecureRandom.hex(20) # You can use any token generation method you prefer
-    
-    if @user.role == 'teacher'
-      @teacher = Teacher.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
-                                email: @user.email, subject_taught: params[:subject_taught])
-      render json: { user: @user, teacher: @teacher, token: token }, status: :created
-    elsif @user.role == 'student'
-      @student = Student.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
-                                email: @user.email, matricule: params[:matricule])
-      render json: { user: @user, student: @student, token: token }, status: :created
-    else
-      render json: { user: @user, token: token }, status: :created
-    end
-  else
-    render json: @user.errors, status: :unprocessable_entity
-  end
-end
 
+  # POST /api/users
+  def signup
+    @user = User.new(user_params)
+    if @user.save
+      # Generate a unique token for the user
+      token = SecureRandom.hex(20) # You can use any token generation method you prefer
+
+      if @user.role == 'teacher'
+        @teacher = Teacher.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
+                                  email: @user.email, subject_taught: params[:subject_taught])
+        render json: { user: @user, teacher: @teacher, token: }, status: :created
+      elsif @user.role == 'student'
+        @student = Student.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
+                                  email: @user.email, matricule: params[:matricule])
+        render json: { user: @user, student: @student, token: }, status: :created
+      else
+        render json: { user: @user, token: }, status: :created
+      end
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
 
   def login
     @user = User.find_by(email: params[:email])
-  
+
     if @user&.valid_password?(params[:password])
       token = encode_token(user_id: @user.id)
-      render json: { message: 'Login successful', user: @user, token: token }
+      render json: { message: 'Login successful', user: @user, token: }
     else
       render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
   end
-  
+
   private
-  
+
   def encode_token(payload)
-    JWT.encode(payload, '95f0b537e51c30349a5f11e768a9b5f9ce8ea6a366bf21b3fa916777550c4bdf291b80ee543887398fd754412bb93492ce951c9482d7a9d7320f2227f650f7af', 'HS256')
+    secret_key = '95f0b537e51c30349a5f11e768a9b5f9ce8ea6a366bf21b3fa916777550c4bdf291b80ee543887398fd754412bb93492ce951c9482d7a9d7320f2227f650f7af'
+    JWT.encode(payload, secret_key, 'HS256')
   end
 
   # PATCH/PUT /api/user/:id
@@ -94,8 +95,6 @@ end
   rescue ActiveRecord::InvalidForeignKey => e
     render json: { error: e.message }, status: :unprocessable_entity
   end
-
-  private
 
   # Method to delete user and its associated teacher and student records
   def destroy_user_and_associations(user)
