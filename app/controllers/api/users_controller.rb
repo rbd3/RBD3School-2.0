@@ -1,3 +1,5 @@
+require 'jwt'
+
 # app/controllers/api/users_controller.rb
 class Api::UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
@@ -23,28 +25,32 @@ class Api::UsersController < ApplicationController
   def signup
     @user = User.new(user_params)
     if @user.save
+      # Generate a unique token for the user
+      token = encode_token(user_id: @user.id)
+
       if @user.role == 'teacher'
         @teacher = Teacher.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
                                   email: @user.email, subject_taught: params[:subject_taught])
-        render json: { user: @user, teacher: @teacher }, status: :created
+        render json: { user: @user, teacher: @teacher, token: }, status: :created
       elsif @user.role == 'student'
         @student = Student.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
                                   email: @user.email, matricule: params[:matricule])
-        render json: { user: @user, student: @student }, status: :created
+        render json: { user: @user, student: @student, token: }, status: :created
       else
-        render json: @user, status: :created
+        render json: { user: @user, token: }, status: :created
       end
     else
       render json: @user.errors, status: :unprocessable_entity
     end
   end
 
-  # POST /api/users/login
   def login
     @user = User.find_by(email: params[:email])
 
     if @user&.valid_password?(params[:password])
-      render json: { message: 'Login successful', user: @user }
+      # Generate a unique token for the user
+      token = encode_token(user_id: @user.id)
+      render json: { message: 'Login successful', user: @user, token: }
     else
       render json: { error: 'Invalid email or password' }, status: :unauthorized
     end
@@ -85,6 +91,11 @@ class Api::UsersController < ApplicationController
   end
 
   private
+
+  def encode_token(payload)
+    secret_key = Rails.application.secrets.secret_key_base
+    JWT.encode(payload, secret_key, 'HS256')
+  end
 
   # Method to delete user and its associated teacher and student records
   def destroy_user_and_associations(user)
