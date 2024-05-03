@@ -51,7 +51,6 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 gem 'devise'
 gem 'jwt'
 
-
 # Allows pagination
 gem 'rack-cors'
 gem 'will_paginate'
