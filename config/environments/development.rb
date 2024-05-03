@@ -1,5 +1,15 @@
 require "active_support/core_ext/integer/time"
 
+Rails.application.config.middleware.insert_before 0, Rack::Cors do
+  allow do
+    origins 'http://localhost:5173'
+    resource '*',
+             headers: :any,
+             methods: [:get, :post, :put, :delete, :options, :head]
+  end
+end
+
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
