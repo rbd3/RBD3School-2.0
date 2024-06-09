@@ -35,7 +35,7 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 Book A Doctor appointments (Backend) <a name="about-project"></a>
+# 📖 RBD SCHOOL (Backend) <a name="about-project"></a>
 
 The RBD School (Backend) is a Rails application specifically designed for managing students and teachers. This application utilizes API endpoints that allow users to load, create, and delete  information. A teacher or admin can add mark too.Users must either sign up for an account or sign in to access these API endpoints.
 
