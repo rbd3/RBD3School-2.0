@@ -98,19 +98,12 @@ The main features of this app include:
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- Kanban Board -->
-
-### Kanban Board <a name="kanban-board"></a>
-
-- [Original Kanban Board](https://github.com/users/katarighe/projects/4/views/1)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- LIVE DEMO -->
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [Live Demo Link](https://book-doctor-appointment-frontend.netlify.app/)
+- [Live Demo Link](https://school-react.onrender.com/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -127,15 +120,6 @@ In order to run this project you need to install the following items:
 - Ruby
 - Ruby on Rails
 - PostgreSQL
-
-### Setup
-
-Clone this repository to your desired folder:
-
-```
-git clone git@github.com:katarighe/book-appointment-back-end.git
-cd book-appointment-back-end
-```
 
 ### Install
 
@@ -191,52 +175,17 @@ run the test with:
 rspec spec
 ```
 
-Visit /coverage/index.html in your browser.
-
-![image](https://github.com/katarighe/book-appointment-back-end/assets/80690364/d0e60d0e-7ab3-4bfe-acb1-b2c06e71ae03)
-
-To open API documentation, please execute the following command:
-
-```
-rails rswag:specs:swaggerize
-```
-
-Visit http://localhost:3001/api-docs in your browser.
-
-![image](https://github.com/katarighe/book-appointment-back-end/assets/80690364/5c85bba4-0863-4c4e-9cc9-658a9c2b08b3)
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- AUTHORS -->
 
 ## 👥 Authors <a name="authors"></a>
 
-👤 **Mohamed Aden Ighe**
-
-- GitHub: [@katarighe](https://github.com/katarighe)
-- Twitter: [@katarighe](https://twitter.com/katarighe)
-- LinkedIn: [@mighe](https://linkedin.com/in/mighe)
-
-👤: **Antoine Makdessy**
-
-- GitHub: [@ANTOINE1128](https://github.com/ANTOINE1128)
-- LinkedIn: [LinkedIn](https://www.linkedin.com/in/antoine-makdessy/)
-
 👤 **Andry Narson**
 
 - GitHub: [@rbd3](https://github.com/rbd3)
 - LinkedIn: [@Andry Narson Rabedesana](https://linkedin.com/in/andry-rabedesana)
 
-👤 **Sodeeq Awoyemi**
-
-- GitHub: [@githubhandle](https://github.com/Errytagedesign)
-- Twitter: [@twitterhandle](https://twitter.com/errytage)
-- LinkedIn: [LinkedIn](https://www.linkedin.com/in/errytagedesigns/)
-
-👤 **Clarence Atim**
-
-- GitHub: [@ClarenceAtim](https://github.com/ClarenceAtim)
-- LinkedIn: [@Clarence Atim](https://www.linkedin.com/in/tegum-clarence-atim/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -246,24 +195,10 @@ Visit http://localhost:3001/api-docs in your browser.
 
 Here are some future features that could be added to the Book a Doctor appointments app in the future.
 
-- **Medication management**
-- **Personalized healthcare plans**
-- **Symptom checker**
-- **Multilingual support**
-- **Electronic health records (EHR)**
-- **Clinical decision support**
-- **Performance analytics**
-- **Appointment reminders**
-- **Wait time estimates**
-- **Social features**
-- **Patient communication**
-- **Medical record access**
+- **Real time chat**
+- **Pay tuition**
 
-These are just a few potential future features for the "Book a Doctor" appointments app. The specific features that are implemented will depend on the needs and preferences of the users, as well as the available resources and technology.
-
-It is also important to consider the ethical implications of adding new features, such as the potential for bias in AI-powered tools and the need to protect patient privacy and security.
-
-Ultimately, the goal of any new feature should be to improve the user experience and make it easier for patients and doctors to access and manage healthcare.
+Ultimately, the goal of any new feature should be to improve the user experience and make it easier for student, teacher and staffs to access and manage account.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -289,10 +224,7 @@ Give a star⭐️ or a thumbs up 👍 if you like this project! You can visit my
 
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
-- Project supervised by [Microverse](https://www.microverse.org/)
-- [Creative Commons 4.0 License](https://creativecommons.org/licenses/by-nc/4.0/)
-- Original design theme is by [Murat Korkmaz on Behance](https://www.behance.net/muratk)
-- [Link to the original design theme](https://www.behance.net/gallery/26425031/Vespa-Responsive-Redesign/modules/173005579) by Murat Korkmaz
+- My family who supported me
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
