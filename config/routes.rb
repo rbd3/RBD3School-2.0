@@ -34,7 +34,7 @@ Rails.application.routes.draw do
     end
     
     post '/signup', to: 'users#signup'
-    get '/login', to: 'users#login'
+    post '/login', to: 'users#login'
 
     resources :subjects, only: [:index, :show, :create, :update, :destroy]
     resources :teachers, only: [:index, :show, :create, :update, :destroy]

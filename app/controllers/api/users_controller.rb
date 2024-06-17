@@ -22,27 +22,41 @@ class Api::UsersController < ApplicationController
   end
 
   # POST /api/users
-  def signup
-    @user = User.new(user_params)
-    if @user.save
-      # Generate a unique token for the user
-      token = encode_token(user_id: @user.id)
+def signup
+  @user = User.new(user_params)
+  if @user.save
+    # Generate a unique token for the user
+    token = encode_token(user_id: @user.id)
 
-      if @user.role == 'teacher'
-        @teacher = Teacher.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
-                                  email: @user.email, subject_taught: params[:subject_taught])
-        render json: { user: @user, teacher: @teacher, token: }, status: :created
-      elsif @user.role == 'student'
-        @student = Student.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
-                                  email: @user.email, matricule: params[:matricule])
-        render json: { user: @user, student: @student, token: }, status: :created
-      else
-        render json: { user: @user, token: }, status: :created
-      end
+    if @user.role == 'teacher'
+      @teacher = Teacher.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
+                                email: @user.email, subject_taught: params[:subject_taught])
+      render json: { user: @user, teacher: @teacher, token: }, status: :created
+    elsif @user.role == 'student'
+      @student = Student.create(user: @user, first_name: @user.first_name, last_name: @user.last_name,
+                                email: @user.email, matricule: params[:matricule])
+      render json: { user: @user, student: @student, token: }, status: :created
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: { user: @user, token: }, status: :created
     end
+  else
+    render json: { errors: @user.errors.full_messages }, status: :unprocessable_entity
   end
+end
+
+private
+
+def user_params
+  params.require(:user).permit(:first_name, :last_name, :email, :role, :password, :password_confirmation)
+end
+
+
+private
+
+def user_params
+  params.require(:user).permit(:first_name, :last_name, :email, :role, :password, :password_confirmation)
+end
+
 
   def login
     @user = User.find_by(email: params[:email])
