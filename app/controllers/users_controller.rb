@@ -6,14 +6,6 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  # GET /users/1 or /users/1.json
-  def show; end
-
-  # GET /users/new
-  def new
-    @user = User.new
-  end
-
   # GET /users/1/edit
   def edit; end
 
@@ -54,6 +46,14 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def login
+    user = User.find_by(email: params[:email])
+    if user&.valid_password?(params[:password])
+      render json: { token: user.token }
+    else
+      render json: { error: 'Invalid email or password' }, status: :unauthorized
+    end
 
   private
 
